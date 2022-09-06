@@ -1,41 +1,19 @@
 // NIM : 13521102
 // Nama : Jimly Firdaus
-// Tanggal : 4 September 2022
+// Tanggal : 6 September 2022
 // Topik praktikum : ADT Sederhana
-// Deskripsi : Definisi ADT TIME
+// Deskripsi : Implementasi ADT TIME
 
-/* File: time.h */
-/* Definisi ADT TIME */
+/* File: time.c */
+/* Realisasi ADT TIME */
 #include <stdio.h>
+#include "time.h"
 
-#ifndef TIME_H
-#define TIME_H
-
-#include "boolean.h"
-
-/* *** Definisi TYPE TIME <HH:MM:SS> *** */
-typedef struct
-{
-    int HH; /* integer [0..23] */
-    int MM; /* integer [0..59] */
-    int SS; /* integer [0..59] */
-} TIME;
-
-/* *** Notasi Akses: selektor TIME *** */
-#define Hour(T) (T).HH
-#define Minute(T) (T).MM
-#define Second(T) (T).SS
-
-/* ***************************************************************** */
-/* DEFINISI PRIMITIF                                                 */
-/* ***************************************************************** */
-/* KELOMPOK VALIDASI TERHADAP TYPE                                   */
-/* ***************************************************************** */
 boolean IsTIMEValid(int H, int M, int S)
 {
     /* Mengirim true jika H,M,S dapat membentuk T yang valid */
     /* dipakai untuk mentest SEBELUM membentuk sebuah Jam */
-    return (0 <= H <= 23 && 0 <= M <= 59 && 0 <= M <= 59);
+    return ((0 <= H && H <= 23) && (0 <= M && M <= 59) && (0 <= S && S <= 59));
 }
 
 /* *** Konstruktor: Membentuk sebuah TIME dari komponen-komponennya *** */
@@ -66,19 +44,13 @@ void BacaTIME(TIME *T)
        1 3 4
        --> akan terbentuk TIME <1,3,4> */
     int HH, MM, SS;
-    while (true)
+    scanf("%d %d %d", &HH, &MM, &SS);
+    while (IsTIMEValid(HH, MM, SS) != true)
     {
-        scanf("%d %d %d\n", HH, MM, SS);
-        if (IsTIMEValid(HH, MM, SS) == true)
-        {
-            CreateTime(T, HH, MM, SS);
-            break;
-        }
-        else
-        {
-            printf("Jam tidak valid");
-        }
+        printf("Jam tidak valid\n");
+        scanf("%d %d %d", &HH, &MM, &SS);
     }
+    CreateTime(T, HH, MM, SS);
 }
 
 void TulisTIME(TIME T)
@@ -132,12 +104,12 @@ TIME DetikToTIME(long N)
 boolean TEQ(TIME T1, TIME T2)
 {
     /* Mengirimkan true jika T1=T2, false jika tidak */
-    return (Hour(T1) == Hour(T2) && Minute(T1) == Minute(T2) && Second(T1) == Second(T2));
+    return (TIMEToDetik(T1) == TIMEToDetik(T2));
 }
 boolean TNEQ(TIME T1, TIME T2)
 {
     /* Mengirimkan true jika T1 tidak sama dengan T2 */
-    return (Hour(T1) != Hour(T2) || Minute(T1) != Minute(T2) || Second(T1) == Second(T2));
+    return (TIMEToDetik(T1) != TIMEToDetik(T2));
 }
 boolean TLT(TIME T1, TIME T2)
 {
@@ -154,36 +126,28 @@ boolean TGT(TIME T1, TIME T2)
 TIME NextDetik(TIME T)
 {
     /* Mengirim 1 detik setelah T dalam bentuk TIME */
-    TIME res = T;
-    long ans = TIMEToDetik(res) + 1;
-    return DetikToTIME(ans);
+    return DetikToTIME(TIMEToDetik(T) + 1);
 }
 TIME NextNDetik(TIME T, int N)
 {
     /* Mengirim N detik setelah T dalam bentuk TIME */
-    TIME res = T;
-    long ans = TIMEToDetik(res) + N;
-    return DetikToTIME(ans);
+    return DetikToTIME(TIMEToDetik(T) + N);
 }
 TIME PrevDetik(TIME T)
 {
     /* Mengirim 1 detik sebelum T dalam bentuk TIME */
-    TIME res = T;
-    long ans = TIMEToDetik(res) - 1;
-    return DetikToTIME(ans);
+    return DetikToTIME(TIMEToDetik(T) - 1);
 }
 TIME PrevNDetik(TIME T, int N)
 {
     /* Mengirim N detik sebelum T dalam bentuk TIME */
-    TIME res = T;
-    long ans = TIMEToDetik(res) - N;
-    return DetikToTIME(ans);
+    return DetikToTIME(TIMEToDetik(T) - N);
 }
 /* *** Kelompok Operator Aritmetika *** */
-long Durasi(TIME TAw, TIME TAkh){
-/* Mengirim TAkh-TAw dlm Detik, dengan kalkulasi */
-/* Jika TAw > TAkh, maka TAkh adalah 1 hari setelah TAw */
-    long time =  TIMEToDetik(TAkh) - TIMEToDetik(TAw) + 86400;
+long Durasi(TIME TAw, TIME TAkh)
+{
+    /* Mengirim TAkh-TAw dlm Detik, dengan kalkulasi */
+    /* Jika TAw > TAkh, maka TAkh adalah 1 hari setelah TAw */
+    long time = TIMEToDetik(TAkh) - TIMEToDetik(TAw) + 86400;
     return (time % 86400);
 }
-#endif
