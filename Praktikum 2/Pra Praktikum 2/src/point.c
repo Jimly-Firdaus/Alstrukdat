@@ -197,10 +197,10 @@ void Putar(POINT *P, float Sudut)
 {
     /* I.S. P terdefinisi */
     /* F.S. P digeser sebesar Sudut derajat dengan sumbu titik (0,0) */
-    // Jika Sudut > 0 maka arah putaran clockwise
+    // Jika Sudut > 0 maka arah putaran counter clockwise
     float x = Absis(*P), y = Ordinat(*P);
     const float pi = 3.1415;
-    Sudut -= 360;
+    Sudut *= (-1);
     Absis(*P) = (x * (cos(Sudut / 180 * pi))) - (y * (sin(Sudut / 180 * pi)));
     Ordinat(*P) = (x * (sin(Sudut / 180 * pi))) + (y * (cos(Sudut / 180 * pi)));
 }

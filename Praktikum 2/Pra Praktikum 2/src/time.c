@@ -136,12 +136,12 @@ TIME NextNDetik(TIME T, int N)
 TIME PrevDetik(TIME T)
 {
     /* Mengirim 1 detik sebelum T dalam bentuk TIME */
-    return DetikToTIME(TIMEToDetik(T) - 1);
+    return DetikToTIME(TIMEToDetik(T) - 1 + 86400);
 }
 TIME PrevNDetik(TIME T, int N)
 {
     /* Mengirim N detik sebelum T dalam bentuk TIME */
-    return DetikToTIME(TIMEToDetik(T) - N);
+    return DetikToTIME(TIMEToDetik(T) - N + 86400);
 }
 /* *** Kelompok Operator Aritmetika *** */
 long Durasi(TIME TAw, TIME TAkh)

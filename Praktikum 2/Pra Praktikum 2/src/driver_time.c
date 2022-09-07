@@ -40,5 +40,11 @@ void main()
     time = PrevDetik(time);
     time2 = PrevNDetik(time2, 5);
 
+    printf("\nPrev detik: \n");
+    time = PrevDetik(time);
+    time2 = PrevNDetik(time2, 5);
+    TulisTIME(time);
+    TulisTIME(time2);
+
     printf("\nDurasi dari time Awal ke time Akhir: %ld\n", Durasi(time, time2));
 }

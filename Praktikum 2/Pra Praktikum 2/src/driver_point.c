@@ -35,11 +35,13 @@ int main(){
 
     printf("Point anda akan ditranslasi sebesar P1\n");
     Geser(&P2, P1.X, P1.Y);
-    printf("Point anda dicerminkan sumbu Y, kemudian sumbu X, lalu diputar 90 derajat berlawanan jarum jam\n");
-
+    printf("Point anda dicerminkan sumbu Y, kemudian sumbu X, lalu diputar 90 derajat searah jarum jam\n");
+    TulisPOINT(P2);
     Mirror(&P2, false);
+    TulisPOINT(P2);
     Mirror(&P2, true);
-    Putar(&P2, 90);
+    TulisPOINT(P2);
+    Putar(&P2, -135);
     printf("Lokasi titik P2 sekarang ada di: "); TulisPOINT(P2);
 
     printf("Jarak P1 dengan origin ialah %f, sedangkan dengan P2 ialah %f\n", Jarak0(P1), Panjang(P1, P2));
