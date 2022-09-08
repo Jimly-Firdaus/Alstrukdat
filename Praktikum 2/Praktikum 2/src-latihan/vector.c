@@ -3,7 +3,7 @@
 // Tanggal : 8 September 2022
 // Topik praktikum : ADT Sederhana
 // Deskripsi : ADT Vector
-// Score : 160 / 190
+// Score : 190 / 190
 
 #include <stdio.h>
 #include "vector.h"
