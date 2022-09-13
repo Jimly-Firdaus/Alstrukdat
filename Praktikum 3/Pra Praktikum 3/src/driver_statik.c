@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include "liststatik.c"
+
+void main () {
+    ListStatik l1, l2;
+    printf("Inisialisasi list 1\n");
+    CreateListStatik(&l1);
+    printf("Inisialisasi list 2\n");
+    CreateListStatik(&l2);
+    printf("Masukkan banyak Elemen dan Input Elemen 1: \n");
+    readList(&l1);
+    printf("List 1 yang dibuat adalah : ");
+    printList(l1);
+    printf("\n");
+    printf("Masukkan banyak Elemen dan Input Elemen 2: \n");
+    readList(&l2);
+    printf("List 2 yang dibuat adalah : ");
+    printList(l2);
+    printf("\n");
+    printf("Panjang dari List yang dibuat : %d\n", listLength(l1));
+    printf("Nilai dari index pertama adalah : %d\n", getFirstIdx(l1));
+    printf("Nilai dari index terakhir adalah : %d\n", getLastIdx(l1));
+    IdxType i;
+    printf("Masukkan index: ");
+    scanf("%d",&i);
+    isIdxValid(l1, i) ? printf("Index valid \n") : printf("Index invalid \n");
+    isIdxEff(l1, i) ? printf("Index berada pada range efektif \n") : printf("Index tidak berada pada range efektif \n");
+    // if (isIdxValid(l, i)) printf("Index valid \n");
+    // else printf("Index invalid \n");
+    // if (isIdxEff(l, i)) printf("Index berada pada range efektif \n");
+    // else printf("Index tidak berada pada range efektif \n");
+    isEmpty(l1) ? printf("List 1 kosong \n") : printf("List 1 tidak kosong \n");
+    isFull(l2) ? printf("List 2 Penuh \n") : printf("List 2 tidak penuh \n");
+    printf("Berikut l1 dan l2 \n");
+    printList(l1);
+    printList(l2);
+    printf("\nl1 + l2 = ");
+    printList(plusMinusList(l1, l2, true));
+    printf("\nl1 - l2 = ");
+    printList(plusMinusList(l1, l2, false));
+    isListEqual(l1, l2) ? printf("L1 = L2 \n") : printf("L1 != L2\n");
+    int val_idx_of;
+    printf("Masukkan nilai di l1 yang ingin dicari idxnya: \n");
+    scanf("%d", &val_idx_of);
+    printf("Idx yang dicari: %d\n", indexOf(l1, val_idx_of));
+    int max, min;
+    extremeValues(l2, &max, &min);
+    printf("Max pada l2 %d dan min pada l2 %d", max, min);
+    int val_insert;
+    printf("\nMasukkan value untuk diinsert: ");
+    scanf("%d", &val_insert);
+    printf("\n");
+    printf("Jika diinsert first dan last pada l1: ");
+    insertFirst(&l1, val_insert);
+    insertLast(&l1, val_insert);
+    printList(l1);
+    printf("\n");
+    int idx_2;
+    printf("Masukkan idx untuk insert pada l2: ");
+    scanf("%d", &idx_2);
+    printf("\nJika diinsert pada idx tersebut maka l2: ");
+    insertAt(&l2, val_insert, idx_2);
+    printList(l2);
+    printf("\nJika delete first dan last pada l1: ");
+    deleteFirst(&l1, &val_insert);
+    printf("\nElemen yang didelete: %d\n", val_insert);
+    deleteLast(&l1, &val_insert);
+    printf("Elemen yang didelete: %d\n", val_insert);
+    printf("\nl1 sekarang: ");
+    printList(l1);
+    printf("\nJika delete elemen pada idx tadi maka l2: \n");
+    deleteAt(&l2, &val_insert, idx_2);
+    printf("Elemen yang didelete: %d\n", val_insert);
+    printList(l2);
+    printf("\nSorting l1 asc dan l2 desc menjadi : ");
+    sortList(&l1, true);
+    sortList(&l2, false);
+    printList(l1);
+    printf("\n");
+    printList(l2);
+}
+
+
