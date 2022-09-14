@@ -64,7 +64,7 @@ IdxType getLastIdx(ListStatik l)
 {
     /* Prekondisi : List l tidak kosong */
     /* Mengirimkan indeks elemen l terakhir */
-    return listLength(l) - 1 + getFirstIdx(l);
+    return listLength(l) - 1;
 }
 
 /* ********** Test Indeks yang valid ********** */
@@ -117,13 +117,13 @@ void readList(ListStatik *l)
         scanf("%d", &n);
     } while (!(n >= 0 && n <= CAPACITY));
     // Isi list
+    CreateListStatik(l);
     if (n > 0) {
     int i, x;
     for (i = 0; i < n; i++)
     {
         scanf("%d", &x);
         l->contents[i] = x;
-        printf("\n");
     }
     }
 }
@@ -166,6 +166,7 @@ ListStatik plusMinusList(ListStatik l1, ListStatik l2, boolean plus)
     /* Jika plus = false, mengirimkan l1-l2, yaitu setiap elemen l1 dikurangi
            elemen l2 pada indeks yang sama */
     ListStatik l3;
+    CreateListStatik(&l3);
     int i;
     for (i = 0; i < listLength(l1); i++)
     {
@@ -246,8 +247,6 @@ void insertFirst(ListStatik *l, ElType val)
     /* I.S. List l boleh kosong, tetapi tidak penuh */
     /* F.S. val adalah elemen pertama l yang baru */
     /* *** Menambahkan elemen pada index tertentu *** */
-    if (listLength(*l) == 0)
-        ELMT(*l, IDX_MIN) = val;
     if (listLength(*l) != CAPACITY)
     {
         int i;
@@ -267,7 +266,7 @@ void insertAt(ListStatik *l, ElType val, IdxType idx)
     int i;
     for (i = listLength(*l); i >= idx + 1; i--)
     {
-        ELMT(*l, i) = ELMT(*l, i - 1);
+        l->contents[i] = l->contents[i - 1];
     }
     ELMT(*l, idx) = val;
 }
@@ -278,10 +277,7 @@ void insertLast(ListStatik *l, ElType val)
     /* Proses: Menambahkan val sebagai elemen terakhir List */
     /* I.S. List l boleh kosong, tetapi tidak penuh */
     /* F.S. val adalah elemen terakhir l yang baru */
-    if (listLength(*l) == 0)
-        ELMT(*l, IDX_MIN) = val;
-    if (listLength(*l) != CAPACITY)
-        l->contents[listLength(*l)] = val;
+    l->contents[listLength(*l)] = val;
 }
 
 /* ********** MENGHAPUS ELEMEN ********** */

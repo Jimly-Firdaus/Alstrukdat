@@ -16,7 +16,7 @@ void CreateListDin(ListDin *l, int capacity)
       /* F.S. Terbentuk list dinamis l kosong dengan kapasitas capacity */
       CAPACITY(*l) = capacity;
       NEFF(*l) = 0;
-      BUFFER(*l) = (int *) malloc(capacity * sizeof(int));
+      BUFFER(*l) = (int *)malloc(capacity * sizeof(int));
 }
 
 void dealocateList(ListDin *l)
@@ -100,9 +100,9 @@ void readList(ListDin *l)
       scanf("%d", &N);
       while (N < 0 || N > CAPACITY(*l))
       {
-            printf("\n");
             scanf("%d", &N);
       }
+      NEFF(*l) = N;
       int i;
       if (N != 0)
       {
@@ -111,7 +111,6 @@ void readList(ListDin *l)
                   ElType el;
                   scanf("%d", &el);
                   ELMT(*l, i) = el;
-                  printf("\n");
             }
       }
 }
@@ -179,10 +178,11 @@ boolean isListEqual(ListDin l1, ListDin l2)
       else
       {
             int i = 0;
-            while (ELMT(l1, i) == ELMT(l2, i) && i < NEFF(l1))
+            while ((ELMT(l1, i) == ELMT(l2, i)) && i < NEFF(l1))
             {
                   i++;
             }
+            i--;
             return (i == NEFF(l1) - 1);
       }
 }
@@ -234,8 +234,8 @@ void copyList(ListDin lIn, ListDin *lOut)
       /* I.S. lIn terdefinisi tidak kosong, lOut sembarang */
       /* F.S. lOut berisi salinan dari lIn (identik, nEff dan capacity sama) */
       /* Proses : Menyalin isi lIn ke lOut */
+      CreateListDin(lOut, CAPACITY(lIn));
       NEFF(*lOut) = NEFF(lIn);
-      CAPACITY(*lOut) = CAPACITY(lIn);
       int i;
       for (i = 0; i < NEFF(lIn); i++)
       {
@@ -316,51 +316,62 @@ void sort(ListDin *l, boolean asc)
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListDin *l, ElType val){
-/* Proses: Menambahkan val sebagai elemen terakhir list */
-/* I.S. List l boleh kosong, tetapi tidak penuh */
-/* F.S. val adalah elemen terakhir l yang baru */
-      if (NEFF(*l) == 0) {
+void insertLast(ListDin *l, ElType val)
+{
+      /* Proses: Menambahkan val sebagai elemen terakhir list */
+      /* I.S. List l boleh kosong, tetapi tidak penuh */
+      /* F.S. val adalah elemen terakhir l yang baru */
+      if (NEFF(*l) == 0)
+      {
             ELMT(*l, 0) = val;
-            NEFF(*l)++;
-      } else {
+            NEFF(*l)
+            ++;
+      }
+      else
+      {
             ELMT(*l, NEFF(*l)) = val;
-            NEFF(*l)++;
+            NEFF(*l)
+            ++;
       }
 }
 
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteLast(ListDin *l, ElType *val){
-/* Proses : Menghapus elemen terakhir list */
-/* I.S. List tidak kosong */
-/* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
-/*      Banyaknya elemen list berkurang satu */
-/*      List l mungkin menjadi kosong */
+void deleteLast(ListDin *l, ElType *val)
+{
+      /* Proses : Menghapus elemen terakhir list */
+      /* I.S. List tidak kosong */
+      /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
+      /*      Banyaknya elemen list berkurang satu */
+      /*      List l mungkin menjadi kosong */
       *val = ELMT(*l, NEFF(*l) - 1);
-      NEFF(*l)--;
+      NEFF(*l)
+      --;
 }
 
 /* ********* MENGUBAH UKURAN ARRAY ********* */
-void expandList(ListDin *l, int num){
-/* Proses : Menambahkan capacity l sebanyak num */
-/* I.S. List sudah terdefinisi */
-/* F.S. Ukuran list bertambah sebanyak num */
+void expandList(ListDin *l, int num)
+{
+      /* Proses : Menambahkan capacity l sebanyak num */
+      /* I.S. List sudah terdefinisi */
+      /* F.S. Ukuran list bertambah sebanyak num */
       CAPACITY(*l) += num;
-      BUFFER(*l) = (int *) realloc(BUFFER(*l), sizeof(int) * CAPACITY(*l));
+      BUFFER(*l) = (int *)realloc(BUFFER(*l), sizeof(int) * CAPACITY(*l));
 }
 
-void shrinkList(ListDin *l, int num){
-/* Proses : Mengurangi capacity sebanyak num */
-/* I.S. List sudah terdefinisi, ukuran capacity > num, dan nEff < capacity - num. */
-/* F.S. Ukuran list berkurang sebanyak num. */
+void shrinkList(ListDin *l, int num)
+{
+      /* Proses : Mengurangi capacity sebanyak num */
+      /* I.S. List sudah terdefinisi, ukuran capacity > num, dan nEff < capacity - num. */
+      /* F.S. Ukuran list berkurang sebanyak num. */
       CAPACITY(*l) -= num;
-      BUFFER(*l) = (int *) realloc(BUFFER(*l), sizeof(int) * CAPACITY(*l));
+      BUFFER(*l) = (int *)realloc(BUFFER(*l), sizeof(int) * CAPACITY(*l));
 }
 
-void compressList(ListDin *l){
-/* Proses : Mengubah capacity sehingga nEff = capacity */
-/* I.S. List tidak kosong */
-/* F.S. Ukuran nEff = capacity */
+void compressList(ListDin *l)
+{
+      /* Proses : Mengubah capacity sehingga nEff = capacity */
+      /* I.S. List tidak kosong */
+      /* F.S. Ukuran nEff = capacity */
       CAPACITY(*l) = NEFF(*l);
-      BUFFER(*l) = (int *) realloc(BUFFER(*l), sizeof(int) * CAPACITY(*l));
+      BUFFER(*l) = (int *)realloc(BUFFER(*l), sizeof(int) * CAPACITY(*l));
 }
