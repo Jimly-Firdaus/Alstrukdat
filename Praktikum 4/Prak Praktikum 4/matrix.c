@@ -100,10 +100,7 @@ void displayMatrix(Matrix m)
                 printf(" ");
             }
         }
-        if (i != (ROW_EFF(m) - 1))
-        {
-            printf("\n");
-        }
+        printf("\n");
     }
 }
 
@@ -148,7 +145,7 @@ Matrix multiplyMatrix(Matrix m1, Matrix m2)
     /* Mengirim hasil perkalian matriks: salinan m1 * m2 */
     Matrix m3;
     int temp = 0;
-    createMatrix(ROW_EFF(m1), COL_EFF(m1), &m3);
+    createMatrix(ROW_EFF(m1), COL_EFF(m2), &m3);
     int i, j;
     for (i = 0; i < ROW_EFF(m1); i++)
     {
@@ -175,7 +172,7 @@ Matrix multiplyByConst(Matrix m, ElType x)
     {
         for (j = 0; j < COL_EFF(m); j++)
         {
-            ELMT(m1, i, j) = ELMT(m, i, j) * x;
+            m1.mem[i][j] = x * (m.mem[i][j]);
         }
     }
     return m1;
@@ -190,7 +187,7 @@ void pMultiplyByConst(Matrix *m, ElType k)
     {
         for (j = 0; j < COL_EFF(*m); j++)
         {
-            ELMT(*m, i, j) = ELMT(*m, i, j) * k;
+            m->mem[i][j] = k * (m->mem[i][j]);
         }
     }
 }
@@ -201,14 +198,14 @@ boolean isMatrixEqual(Matrix m1, Matrix m2)
     /* Mengirimkan true jika m1 = m2, yaitu count(m1) = count(m2) dan */
     /* untuk setiap i,j yang merupakan Index baris dan kolom m1(i,j) = m2(i,j) */
     /* Juga merupakan strong eq karena getLastIdxCol(m1) = getLastIdxCol(m2) */
-    if (getLastIdxRow(m1) == getLastIdxRow(m1) && getLastIdxCol(m2) == getLastIdxCol(m2))
+    if (ROW_EFF(m1) == ROW_EFF(m2) && COL_EFF(m1) == COL_EFF(m2))
     {
         boolean result = true;
-        for (int i=0; i<ROW_EFF(m1); i++)
+        for (int i = 0; i < ROW_EFF(m1); i++)
         {
-            for (int j=0; j<COL_EFF(m2); j++)
+            for (int j = 0; j < COL_EFF(m2); j++)
             {
-                if (ELMT(m1,i,j) != ELMT(m2,i,j))
+                if (ELMT(m1, i, j) != ELMT(m2, i, j))
                 {
                     result = false;
                 }
@@ -322,7 +319,7 @@ boolean isSparse(Matrix m)
             }
         }
     }
-    return ((((float) count_not_0) / ((float) max_el)*100)<= 5);
+    return ((((float)count_not_0) / ((float)max_el) * 100) <= 5);
 }
 
 Matrix negation(Matrix m)
@@ -359,10 +356,13 @@ float determinant(Matrix m)
         {
             float num = fm[j][i];
             float denum = fm[i][i];
-            if (denum == 0){
+            if (denum == 0)
+            {
                 factor = 1;
-            } else {
-            factor = num / denum;
+            }
+            else
+            {
+                factor = num / denum;
             }
             for (int k = 0; k < COL_EFF(m); k++)
             {
