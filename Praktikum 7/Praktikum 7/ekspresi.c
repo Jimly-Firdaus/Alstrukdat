@@ -73,14 +73,12 @@ int main () {
 					}
 				}
 				Push(&S1, currentInt);
-				// printf("Current : %d", currentInt);
+				printf("%d\n", currentInt);
 				currentInt = 0;
 			} else {
 				Pop(&S1, &operand_1);
 				Pop(&S1, &operand_2);
 				Push(&S1, evaluate(operand_2, operand_1, currentWord.TabWord[i]));
-				printf("%d\n", operand_2);
-				printf("%d\n", operand_1);
 				printf("%d %c %d\n", operand_2, currentWord.TabWord[i] ,operand_1);
 				printf("%d\n", evaluate(operand_2, operand_1, currentWord.TabWord[i]));
 			}
