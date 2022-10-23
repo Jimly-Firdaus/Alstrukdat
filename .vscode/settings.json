@@ -2,6 +2,7 @@
     "files.associations": {
         "stdio.h": "c",
         "stdlib.h": "c",
-        "tokenmachine.h": "c"
+        "tokenmachine.h": "c",
+        "boolean.h": "c"
     }
 }
