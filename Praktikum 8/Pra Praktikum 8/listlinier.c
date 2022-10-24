@@ -81,7 +81,11 @@ int indexOf(List l, ElType val){
             idx++;
         }
     }
-    return idx;
+    if (found) {
+        return idx;
+    } else {
+        return IDX_UNDEF;
+    }
     }
 }
 
@@ -180,15 +184,19 @@ void deleteAt(List *l, int idx, ElType *val){
 /*      Elemen l pada indeks ke-idx dihapus dari l */
     Address loc = FIRST(*l);
     int ctr = 0;
-    while (ctr < idx - 1){
-        ctr++;
-        loc = loc->next;
+    if (idx == 0) {
+        deleteFirst(l, val);
+    } else {
+        while (ctr < idx - 1){
+            ctr++;
+            loc = loc->next;
+        }
+        //  ctr == idx - 1
+        Address p = loc->next;
+        loc->next = p->next;
+        *val = p->info;
+        free(p);
     }
-    //  ctr == idx - 1
-    Address p = loc->next;
-    loc->next = p->next;
-    *val = p->info;
-    free(p);
 }
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
@@ -200,19 +208,19 @@ void displayList(List l){
 /* Jika list kosong : menulis [] */
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
     if (isEmpty(l)){
-        printf("[]\n");
+        printf("[]");
     } else {
         Address p = FIRST(l);
         printf("[");
         while(p != NULL){
             printf("%d", p->info);
-            p = p->next;
             if (p->next != NULL){
                 printf(",");
             }
+            p = p->next;
         }
         // p.next == NULL
-        printf("]\n");
+        printf("]");
     }
 
 }
