@@ -71,7 +71,6 @@ List konsb(List l, ElType e) {
         l->next = konsb(tail(l), e);
         return l;
     }
-
 }
 
 List copy(List l) {
